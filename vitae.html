@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gaoxt</title>
+    <script type="text/javascript" src="/js/showdown.min.js"></script>
+    <style type="text/css"> 
+    body {
+      font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+      font-size: 16px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff;
+      margin-left: 2%;
+    }
+    ul li {
+      line-height: 24px;
+    }
+    </style>
+</head>
+</style>
+<body>
+<div id="main">
+# 高西的个人简历
+
+## 联系方式
+* 坐标：广州
+* 邮箱：simerpc@gmail.com
+* 主页：[https://gaoxt.github.io/](https://gaoxt.github.io/)
+
+## 教育背景
+* 2012.09 ~ 2014.07，惠州学院，大专
+
+## 工作经历
+* 2014.09  ~ 2016.09，广州市贝聊信息科技有限公司，php工程师
+
+    ### 服务端(贝聊家长版1.0-3.2、贝聊老师版1.0)
+    * 接口开发、缓存设计、接口规范、实现基础核心的逻辑（班级动态、接入IM、信息监控），实现服务器与客户端的流程交互。
+    * 优化并维护API。
+
+    ### 后台相关
+    * 提供针对性智能化贝聊服务（后台统一权限管理、订餐服务、短信推送、短链管理等）
+    * 为提供市场、运营提供可体系化工具和数据（运营数据统计分析、竞品抓取分析、灰度推送）
+    * 客户服务反馈（幼儿园开园资料维护、客户BUG反馈与跟进）
+    * 附近幼儿园官网展示页面，数据来自（抓取百度全国幼儿园、园长上传园所资料）
+    * 后端协作开发：百万葵园、教师节活动、国庆节活动、金翅膀购书系统、庆六一活动等等
+
+## 熟悉的相关技术
+* web：html、div、css、javascript、ajax、jquery、php
+* 框架：laravel、lumen、smarty模板
+* 数据：mysql、mongodb、memcache、redis、drds
+* 运维：shell、nginx、apache
+* 版本：svn、git
+
+## 自我介绍
+* 两年开发经验，熟练掌握各类服务器技术，包括缓存、数据库、第三方API等。
+* 对web开发和api设计比较熟悉，能够独立承担中小型项目，协作开发大型项目。
+* 在贝聊开发和并且维护日活上万的项目，获过部门之星称号。
+* 擅长独立思考，团队协作，目前在提高运维能力，觉得这是后端工程师必不可少的。
+* 希望两年内在后端架构方面有独挡一面的能力。
+
+</div>
+</body>
+<script type="text/javascript">
+  var text = document.getElementById("main").innerHTML;
+  var converter = new showdown.Converter(),
+  html = converter.makeHtml(text);
+  document.getElementById("main").innerHTML = html;
+</script>
+</html>

@@ -1,6 +1,164 @@
-个人博客 csdn
-代码托管 github、coding（个人项目）
-知识wiki github.io
-个人存储 jianguoyun
-个人笔记 evernote
-密码管理 KeePass
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>gaoxt</title>
+<style type="text/css">
+.demo{width:600px; margin:10px auto; text-align:center}
+</style>
+</head>
+<body>
+<div id="main">
+  <div class="demo">
+    <div id="d"></div> 
+	<canvas id="clock" width="600" height="600"></canvas> 
+  </div>
+</div>
+<script type="text/javascript">
+
+var time = new Date();
+var h = time.getHours(); //时
+var m = time.getMinutes(); //分
+var s = time.getSeconds(); //秒
+
+
+var hour = h;
+var minutes = m;
+var seconds = s;
+
+// h= h>12 ? (h-12)*5+parseInt(m/12) : h*5+parseInt(m/12); //时针 初始位置
+
+var x=300,y=300,sAngle=0; //x y 原点 秒针角度变量
+
+
+//小于10补0
+function use_zero(num){
+    if(num<10){
+        num = "0"+parseInt(num);
+    }
+    if(num==60){
+        num="00";
+    }
+    return num;
+}
+
+function draw(){
+    var c=document.getElementById("clock");
+    var ctx=c.getContext("2d"); //获取绘图对象
+    ctx.clearRect(0,0,c.width,c.height); //清除上次绘制的图形
+
+    s++;//秒针
+    seconds++;//秒针
+ 
+    ctx.fillStyle = '#fff' //填充白色背景色 
+    ctx.fillRect(0,0,c.width,c.height);   //设置画布区域
+ 
+	//填充圆点，在画布中心（200,200）绘制一个半径10px的圆形
+	ctx.beginPath();
+	ctx.arc(x,y,10,0,Math.PI*2,true);
+	ctx.fill();
+	ctx.closePath();
+ 		
+	//填充版权文字
+	ctx.fillStyle="#ccc";
+	ctx.font = "12pt Arial"; 
+	ctx.fillText("",150,250);
+
+
+    //调用日期并填充到画布中
+    ctx.fillStyle="#666";
+    ctx.font = "14pt Verdana";
+    var week =  "日一二三四五六".split("")[time.getDay()];
+    var month = time.getMonth()+1;
+    var year = time.getFullYear();
+    var day = time.getDate();
+    ctx.fillText(year+"年"+month+"月"+day+"日 星期"+week,200,380);
+
+	//调用日期并填充到画布中
+    hour = use_zero(hour);
+    minutes = use_zero(minutes);
+    seconds = use_zero(seconds);
+    ctx.fillText(hour+":"+minutes+":"+seconds,258,410);
+
+	ctx.save(); //保存当前绘图状态
+ 
+    // 时间刻度
+    var angle=(Math.PI*2)/24;
+    for(var i=0;i<24;i++){
+        ctx.beginPath();//开始绘制
+        if(i==0||i%3==0){
+            ctx.font="30px Arial";
+            ctx.fillText(i,x-10,100);
+        }else{
+            ctx.font="16px Arial";
+            ctx.fillText(i,x-10,100);
+        }
+        trans(ctx,x,y,angle);  //刻度分布              
+    }
+    ctx.restore(); //恢复上次保存的绘图状态
+ 
+    sAngle=(Math.PI*2)/60*s; //秒度
+
+	//时针转动
+    ctx.save(); 
+    ctx.lineWidth=5;
+    trans(ctx,x,y,(Math.PI*2)/24*h); 
+    pointer(ctx,x,y,y-110);
+    ctx.restore();
+
+	//分针转动
+	ctx.save();
+	ctx.lineWidth=3;
+	trans(ctx,x,y,(Math.PI*2)/60*m); 
+	pointer(ctx,x,y,y-166);
+	ctx.restore();
+ 
+	//秒针转动
+	ctx.save();
+	trans(ctx,x,y,sAngle);  
+	pointer(ctx,x,y,y-190);
+	ctx.restore();  
+ 
+    //圆盘数据整理
+    if(s%60==0){
+		sAngle=0,s=0,m++;
+        if(m%12==0){ //每十二分 时针旋转一次
+            if(m!=0)h++;
+            if(m%60==0)m=0;
+        }
+     	if(h%60==0)h=0; 
+    }
+
+    //时钟数据整理
+    if(seconds%60==0){
+        seconds=0,minutes++;
+        if(minutes%12==0){ //每十二分 时针旋转一次
+            if(minutes!=0)hour++;
+            if(minutes%60==0)minutes=0;
+        }
+        if(hour%60==0)hour=0; 
+    }
+    
+}
+
+//绘制指针
+function pointer(ctx,x,y,z){
+     ctx.beginPath();
+     ctx.moveTo(x,y);
+     ctx.lineTo(x,z);
+     ctx.stroke();
+     ctx.fill();
+}
+ 
+ //据坐标旋转
+function trans(ctx,x,y,angle){
+     ctx.transform(Math.cos(angle), Math.sin(angle), 
+        -Math.sin(angle), Math.cos(angle), 
+        x*(1-Math.cos(angle)) + x*Math.sin(angle), 
+      	y*(1-Math.cos(angle)) - y*Math.sin(angle))
+}
+ 
+setInterval("draw()",1000);
+</script>
+</body>
+</html>
